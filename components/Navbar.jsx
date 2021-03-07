@@ -61,9 +61,6 @@ export default class Navbar extends Component {
             <>
                 <nav className={`${styles.navbar} ${!navbarVisible ? styles.hidden : ''}`}>
                     <div style={{display: 'flex'}}>
-                        <button className={styles.hamburger} onClick={this.handleMenuToggle}>
-                            {menuOpen ? <MenuOpenIcon /> : <MenuIcon />}
-                        </button>
                         <a href="#" style={{display: 'flex', alignItems: 'center'}} className={styles.logo}>
                             Blockswap
                         </a>
@@ -76,6 +73,9 @@ export default class Navbar extends Component {
                             </a>
                             <div className={styles['notification-dot']} />
                         </div>
+                        <button className={styles.hamburger} onClick={this.handleMenuToggle}>
+                            {menuOpen ? <div style={{transform: 'rotateY(180deg)'}}><MenuOpenIcon /></div> : <MenuIcon />}
+                        </button>
                     </div>
                 </nav>
                 <Dialog

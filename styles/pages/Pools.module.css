@@ -161,12 +161,12 @@
 
 @media only screen and (min-width: 968px) {
     .container {
-        margin-left: 240px;
+        margin-right: 240px;
         max-width: calc(100% - 240px);
     }
 
     .full-width {
-        margin-left: 56px;
+        margin-right: 56px;
         max-width: calc(100% - 56px);
     }
 

@@ -38,11 +38,12 @@
     opacity: 1;
     outline: 0px;
     transition: background-color 0.2s ease 0s;
-    height: 48px;
+    height: 32px;
     padding: 0px 8px;
     background-color: transparent;
     box-shadow: none;
-    margin-right: 24px;
+    margin-left: 12px;
+    margin-right: -8px;
 }
 
 .hamburger svg {
@@ -58,6 +59,7 @@
 .logo {
     font-family: 'Semibold', sans-serif;
     font-size: 20px;
+    margin-left: 16px;
 }
 
 .connect-button {

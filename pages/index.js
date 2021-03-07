@@ -149,11 +149,6 @@ export default class Home extends Component {
 				</Head>
 				<Navbar onSidebarToggle={this.handleSidebarVisibility} />
 				<div style={{position: 'relative', display: 'flex'}}>
-					<Sidebar
-						active="pools"
-						expanded={sidebarExpanded}
-						onSidebarToggle={this.handleSidebarVisibility}
-					/>
 					<div className={`${styles.container} ${!sidebarExpanded ? styles['full-width'] : ''}`}>
 						<div className={styles.section}>
 							<div className={styles.hero}>
@@ -193,6 +188,11 @@ export default class Home extends Component {
 							</div>
 						</div>
 					</div>
+					<Sidebar
+						active="pools"
+						expanded={sidebarExpanded}
+						onSidebarToggle={this.handleSidebarVisibility}
+					/>
 				</div>
 				<Dialog
                     open={connectModalVisible}
