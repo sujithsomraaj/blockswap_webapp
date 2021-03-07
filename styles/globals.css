@@ -81,9 +81,9 @@ a {
 }
 
 @media only screen and (min-width: 370px) {
-  .connect-modal .MuiDialog-paperWidthXs {
-      width: auto;
-      min-width: 360px;
-      max-width: 100%;
+  .connect-modal .MuiDialog-paperWidthSm {
+    width: auto;
+    min-width: 360px;
+    max-width: 100%;
   }
 }

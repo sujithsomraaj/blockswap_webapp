@@ -152,7 +152,7 @@
     padding: 24px;
 }
 
-.modal-content button {
+.token-button {
     -webkit-box-align: center;
     align-items: center;
     border: 0px;
@@ -178,7 +178,7 @@
     margin-bottom: 8px;
 }
 
-.modal-content button:hover {
+.token-button:hover {
     opacity: 0.65;
 }
 
@@ -203,4 +203,190 @@
 
 .modal-content a:hover {
     text-decoration: underline;
+}
+
+.wallet-address {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
+    color: #495020;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 20px;
+}
+
+.modal-link {
+    cursor: pointer;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: fit-content;
+    color: #DC2410;
+    font-size: 14px !important;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-top: 0 !important;
+}
+
+.modal-link:nth-child(2):hover {
+    text-decoration: none !important;
+}
+
+.modal-link:nth-child(1) {
+    margin-right: 16px;
+}
+
+.modal-link svg {
+    margin-left: 4px;
+}
+
+.logout-button {
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 32px;
+    padding: 0px 16px;
+    background-color: transparent;
+    border: 2px solid #DC2410;
+    box-shadow: none;
+    color: #DC2410;
+}
+
+.logout-button:hover {
+    opacity: 0.65;
+}
+
+.balance {
+    color: #DC2410;
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.deposit-input {
+    background-color: rgba(137, 142, 112, 0.1);
+    border: 0px;
+    border-radius: 16px;
+    box-shadow: rgb(74 104 84 / 10%) 0px 2px 2px -1px inset;
+    color: #495020;
+    display: block;
+    font-size: 16px;
+    height: 40px;
+    outline: 0px;
+    padding: 0px 16px;
+    width: 100%;
+}
+
+.deposit-token {
+    color: #DC2410;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: uppercase;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.max-button {
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 16px;
+    box-shadow: rgb(58 10 5 / 40%) 0px -1px 0px 0px inset;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 32px;
+    padding: 0px 16px;
+    background-color: #DC2410;
+    color: white;
+}
+
+.max-button:hover {
+    opacity: 0.65;
+}
+
+.actions-container {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgba(0, 152, 161, 0);
+    display: flex;
+    margin: 0px;
+    padding: 24px 0px;
+}
+
+.action-button {
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 48px;
+    padding: 0px 24px;
+    background-color: transparent;
+    border: 2px solid #DC2410;
+    box-shadow: none;
+    color: #DC2410;
+    width: 100%;
+}
+
+.action-button-primary {
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 16px;
+    box-shadow: rgb(58 10 5 / 40%) 0px -1px 0px 0px inset;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 48px;
+    padding: 0px 24px;
+    background-color: #DC2410;
+    color: white;
+    width: 100%;
+}
+
+.action-button:hover, .action-button-primary:hover {
+    opacity: 0.65;
 }

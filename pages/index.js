@@ -4,7 +4,9 @@ import Navbar from '../components/Navbar'
 import Pool from '../components/Pool'
 import Sidebar from '../components/Sidebar'
 import { Dialog } from '@material-ui/core'
-import { RiCloseFill } from 'react-icons/ri'
+import { RiCheckboxCircleLine, RiCloseFill } from 'react-icons/ri'
+import { BiLinkExternal } from 'react-icons/bi'
+import { MdContentCopy } from 'react-icons/md'
 import MetamaskIcon from '../public/icons/Metamask'
 import WalletConnectIcon from '../public/icons/WalletConnect'
 import QuestionIcon from '../public/icons/Question'
@@ -16,6 +18,11 @@ export default class Home extends Component {
 		this.state = {
 			sidebarExpanded: true,
 			connectModalVisible: false,
+			walletConnected: false,
+			walletAddress: '',
+			approved: false,
+			staked: '',
+			copied: false,
 			stakedOnly: false,
 			tab: 'active',
 			pools: []
@@ -141,16 +148,37 @@ export default class Home extends Component {
 			}
 		})
 	}
+
+	handleCopy = (e) => {
+		e.preventDefault()
+		if (typeof window !== undefined) {
+			navigator.clipboard.writeText(this.state.walletAddress)
+				.then(() => {
+					this.setState({copied: true}, () => {
+						setTimeout(
+							() => this.setState({copied: false}),
+							1500
+						)
+					})
+				})
+				.catch((err) => console.log(err))
+		}
+	}
 	
 	render() {
-		const { sidebarExpanded, connectModalVisible, stakedOnly, tab, pools } = this.state;
+		const { sidebarExpanded, connectModalVisible, stakedOnly, tab, pools, walletConnected, walletAddress, copied, approved, staked } = this.state;
 		return (
 			<>
 				<Head>
 					<title>Blockswap</title>
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
-				<Navbar onSidebarToggle={this.handleSidebarVisibility} />
+				<Navbar
+					onSidebarToggle={this.handleSidebarVisibility}
+					onModalToggle={this.handleModalToggle}
+					walletConnected={walletConnected}
+					walletAddress={walletAddress}
+				/>
 				<div style={{position: 'relative', display: 'flex'}}>
 					<div className={`${styles.container} ${!sidebarExpanded ? styles['full-width'] : ''}`}>
 						<div className={styles.section}>
@@ -186,6 +214,9 @@ export default class Home extends Component {
 										type={type}
 										finished={finished}
 										onModalToggle={this.handleModalToggle}
+										walletConnected={walletConnected}
+										approved={approved}
+										staked={staked}
 									/>
 								))}
 							</div>
@@ -201,7 +232,6 @@ export default class Home extends Component {
                     open={connectModalVisible}
                     onClose={this.handleModalToggle}
                     onBackdropClick={this.handleModalToggle}
-                    maxWidth="xs"
                     disableScrollLock
                     BackdropProps={{
                         style: {
@@ -221,25 +251,40 @@ export default class Home extends Component {
                 >
                     <div className={modalStyles['modal-header']}>
                         <div>
-                            <h2>Connect to a wallet</h2>
+                            <h2>{!walletConnected ? "Connect to a wallet" : "Your wallet"}</h2>
                         </div>
                         <button className={modalStyles['close-modal-button']} onClick={this.handleModalToggle}>
                             <RiCloseFill />
                         </button>
                     </div>
                     <div className={modalStyles['modal-content']}>
-                        <button>
-                            <div>Metamask</div>
-                            <MetamaskIcon />
-                        </button>
-                        <button>
-                            <div>WalletConnect</div>
-                            <WalletConnectIcon />
-                        </button>
-                        <a href="#">
-                            <QuestionIcon />
-                            Learn how to connect
-                        </a>
+						{walletConnected ? (
+							<>
+								<div className={modalStyles['wallet-address']}>0x6b0cec6b6a671569e717e6b7b1c77ae4fffe1293</div>
+								<div style={{display: 'flex', alignItems: 'center', marginBottom: '32px'}}>
+									<a className={modalStyles['modal-link']}>View on BscScan <BiLinkExternal /></a>
+									<a className={modalStyles['modal-link']} onClick={this.handleCopy}>Copy Address {!copied ? <MdContentCopy /> : <RiCheckboxCircleLine />}</a>
+								</div>
+								<div style={{display: 'flex', justifyContent: 'center'}}>
+									<button className={modalStyles['logout-button']}>Logout</button>
+								</div>
+							</>
+						) : (
+							<>
+								<button className={modalStyles['token-button']}>
+									<div>Metamask</div>
+									<MetamaskIcon />
+								</button>
+								<button className={modalStyles['token-button']}>
+									<div>WalletConnect</div>
+									<WalletConnectIcon />
+								</button>
+								<a href="#">
+									<QuestionIcon />
+									Learn how to connect
+								</a>		
+							</>
+						)}
                     </div>
                 </Dialog>
 			</>

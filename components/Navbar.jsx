@@ -15,7 +15,6 @@ export default class Navbar extends Component {
         super(props)
         this.state = {
             navbarVisible: true,
-            connectModalVisible: false,
             menuOpen: true,
         }
     }
@@ -47,16 +46,9 @@ export default class Navbar extends Component {
         }, () => this.props.onSidebarToggle())
     }
 
-    handleModalToggle = () => {
-        this.setState(state => {
-            return {
-                connectModalVisible: !state.connectModalVisible,
-            }
-        })
-    }
-
     render() {
-        const { navbarVisible, menuOpen, connectModalVisible } = this.state
+        const { navbarVisible, menuOpen } = this.state
+        const { walletConnected, walletAddress } = this.props
         return (
             <>
                 <nav className={`${styles.navbar} ${!navbarVisible ? styles.hidden : ''}`}>
@@ -66,7 +58,11 @@ export default class Navbar extends Component {
                         </a>
                     </div>
                     <div style={{display: 'flex'}}>
-                        <button className={styles['connect-button']} onClick={this.handleModalToggle}>Connect</button>
+                        <button className={styles['connect-button']} onClick={this.props.onModalToggle}>
+                            {walletConnected ? (
+                                walletAddress.slice(0, 3)+"..."+walletAddress.slice(-4)
+                            ) : "Connect"}
+                        </button>
                         <div className={styles['profile-button-container']}>
                             <a href="#" >
                                 <ProfileIcon />
@@ -78,51 +74,6 @@ export default class Navbar extends Component {
                         </button>
                     </div>
                 </nav>
-                <Dialog
-                    open={connectModalVisible}
-                    onClose={this.handleModalToggle}
-                    onBackdropClick={this.handleModalToggle}
-                    maxWidth="xs"
-                    disableScrollLock
-                    BackdropProps={{
-                        style: {
-                            backgroundColor: '#4c5711',
-                            opacity: 0.6
-                        }
-                    }}
-                    PaperProps={{
-                        style: {
-                            backgroundColor: '#FFF',
-                            boxShadow: 'rgb(14 14 44 / 10%) 0px 20px 36px -8px, rgb(0 0 0 / 5%) 0px 1px 1px',
-                            border: '1px solid rgb(233, 234, 235)',
-                            borderRadius: '32px'
-                        }
-                    }}
-                    className="connect-modal"
-                >
-                    <div className={styles['modal-header']}>
-                        <div>
-                            <h2>Connect to a wallet</h2>
-                        </div>
-                        <button className={styles['close-modal-button']} onClick={this.handleModalToggle}>
-                            <RiCloseFill />
-                        </button>
-                    </div>
-                    <div className={styles['modal-content']}>
-                        <button>
-                            <div>Metamask</div>
-                            <MetamaskIcon />
-                        </button>
-                        <button>
-                            <div>WalletConnect</div>
-                            <WalletConnectIcon />
-                        </button>
-                        <a href="#">
-                            <QuestionIcon />
-                            Learn how to connect
-                        </a>
-                    </div>
-                </Dialog>
             </>
         )
     }

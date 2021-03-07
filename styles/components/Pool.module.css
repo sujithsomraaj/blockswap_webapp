@@ -183,3 +183,39 @@
     top: -24px;
     width: 135px;
 }
+
+.pool-action-button {
+    -webkit-box-align: center;
+    align-items: center;
+    background: rgba(73, 80, 32, 0.87);
+    border-radius: 12px;
+    color: #FFF;
+    cursor: pointer;
+    display: flex;
+    font-weight: 700;
+    -webkit-box-pack: center;
+    justify-content: center;
+    outline: none;
+    border: 2px solid #495020;
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.pool-action-button:hover {
+    opacity: none;
+}
+
+.disabled-button {
+    background-color: rgb(233, 234, 235);
+    border-color: rgb(233, 234, 235);
+    box-shadow: none;
+    color: rgb(189, 194, 196);
+    cursor: not-allowed;
+}
+
+.disabled-button:hover {
+    opacity: 1;
+}
