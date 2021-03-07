@@ -189,7 +189,7 @@ export default class Pool extends Component {
                                 </div>
                                 <div style={{width: '24px', height: '24px'}} />
                                 <div style={{flex: '1 1 0%'}}>
-                                    <button className={modalStyles['action-button-primary']} onClick={this.handleModalToggle}>Cancel</button>
+                                    <button className={modalStyles['action-button-primary']} onClick={this.handleModalToggle}>Confirm</button>
                                 </div>
                             </div>
                         </div>
