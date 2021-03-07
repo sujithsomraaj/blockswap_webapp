@@ -1,0 +1,185 @@
+.card {
+    background: rgb(255, 255, 255);
+    border-radius: 32px;
+    display: flex;
+    color: #495020;
+    box-shadow: rgb(25 19 38 / 10%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+    flex-direction: column;
+    position: relative;
+    min-width: 280px;
+    max-width: 31.5%;
+    width: 100%;
+    margin: 0px 8px 32px;
+}
+
+.card-content {
+    padding: 24px;
+}
+
+.title {
+    color: #495020;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+}
+
+.logo-container {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    width: 100%;
+    padding-top: 0%;
+}
+
+.earnings {
+    color: #495020;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 32px;
+}
+
+.token {
+    color: #DC2410;
+    font-size: 14px;
+}
+
+.button-container {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin: 16px 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.button {
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 16px;
+    box-shadow: rgb(58 10 5 / 40%) 0px -1px 0px 0px inset;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 48px;
+    padding: 0px 24px;
+    background-color: #DC2410;
+    color: white;
+}
+
+.apply-button {
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 48px;
+    padding: 0px 24px;
+    background-color: transparent;
+    border: 2px solid #DC2410;
+    box-shadow: none;
+    color: #DC2410;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.button:hover, .apply-button:hover {
+    opacity: 0.65;
+}
+
+.text-small {
+    font-family: 'Semibold', sans-serif;
+    color: #2f350e;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.card-footer {
+    border-top: 1px solid rgb(233, 234, 235);
+    padding: 24px;
+}
+
+.type {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #495020;
+    border-radius: 16px;
+    color: #495020;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 400;
+    height: 28px;
+    line-height: 1.5;
+    padding: 0px 8px;
+    white-space: nowrap;
+}
+
+.type svg {
+    fill: #495020;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.details-button {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: transparent;
+    border: 0px;
+    color: #DC2410;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 600;
+    height: 32px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    outline: 0px;
+    padding: 0px;
+}
+
+.inactive .title, .inactive .earnings, .inactive .text-small {
+    color: rgb(189, 194, 196);
+}
+
+.finished-banner {
+    background-image: url(/images/pool-finished.svg);
+    background-position: right top;
+    height: 135px;
+    position: absolute;
+    right: -24px;
+    top: -24px;
+    width: 135px;
+}

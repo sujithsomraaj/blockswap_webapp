@@ -1,0 +1,194 @@
+.container {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    margin-top: 64px;
+    transition: margin-top 0.2s ease 0s;
+    transform: translate3d(0px, 0px, 0px);
+    max-width: 100%;
+}
+
+.section {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    padding-left: 16px;
+    padding-right: 16px;
+    min-height: calc(100vh - 64px);
+}
+
+.hero {
+    -webkit-box-align: center;
+    align-items: center;
+    color: #DC2410;
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 250px;
+    padding: 48px 0px;
+}
+
+.hero h1 {
+    color: #495020;
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.1;
+    font-size: 48px;
+}
+
+.hero ul {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    font-size: 16px;
+}
+
+.hero ul li{
+    margin-bottom: 0px;
+}
+
+.divider {
+    background-color: #495020;
+    height: 1px;
+    margin: 0px auto 32px;
+    width: 100%;
+}
+
+.pools {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.switch {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: #898e7013;
+    border-radius: 24px;
+    box-shadow: rgb(74 74 104 / 10%) 0px 2px 2px -1px inset;
+    cursor: pointer;
+    display: inline-flex;
+    height: 40px;
+    position: relative;
+    transition: background-color 200ms ease 0s;
+    width: 72px;
+}
+
+.checked {
+    background-color: #31d0aa;
+}
+
+.checkbox {
+    cursor: pointer;
+    opacity: 0;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+}
+
+.thumb {
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 32px;
+    left: 4px;
+    position: absolute;
+    top: 4px;
+    transition: left 200ms ease-in 0s;
+    width: 32px;
+    z-index: 1;
+}
+
+.checkbox:hover + .thumb, .checkbox:focus + .thumb {
+    box-shadow: rgb(73, 80, 32) 0px 0px 0px 1px, rgb(73 80 32 / 60%) 0px 0px 0px 4px;
+}
+
+.checkbox:checked + .thumb {
+    left: calc(100% - 36px);
+}
+
+.switch-label {
+    color: #495020;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-left: 8px;
+}
+
+.tabs {
+    background-color: #898e7013;
+    border-radius: 16px;
+    display: inline-flex;
+}
+
+.tabs a {
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s;
+    height: 32px;
+    padding: 0px 16px;
+    background-color: transparent;
+    box-shadow: none;
+    color: #898E70;
+}
+
+.tabs a:hover {
+    opacity: 0.75;
+}
+
+.tab-active {
+    background-color: #898E70 !important;
+    color: #FFF !important;
+}
+
+@media only screen and (min-width: 968px) {
+    .container {
+        margin-left: 240px;
+        max-width: calc(100% - 240px);
+    }
+
+    .full-width {
+        margin-left: 56px;
+        max-width: calc(100% - 56px);
+    }
+
+    .section {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    .hero h1 {
+        font-size: 64px;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .section {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr 1fr;
+        margin: 0px;
+        max-width: none;
+    }
+}
