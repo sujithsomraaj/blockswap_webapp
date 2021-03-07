@@ -37,6 +37,9 @@ export default class Home extends Component {
 		})
 		this.setState({pools})
 		if (typeof window !== undefined) {
+			if (window.innerWidth < 968) {
+				this.setState({sidebarExpanded: false})
+			}
 			window.addEventListener('resize', this.handleWindowResize)
 		}
 	}
