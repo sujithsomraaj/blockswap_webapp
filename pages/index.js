@@ -239,7 +239,8 @@ export default class Home extends Component {
                     BackdropProps={{
                         style: {
                             backgroundColor: '#4c5711',
-                            opacity: 0.6
+                            opacity: 0.6,
+							zIndex: 0
                         }
                     }}
                     PaperProps={{
@@ -263,7 +264,7 @@ export default class Home extends Component {
                     <div className={modalStyles['modal-content']}>
 						{walletConnected ? (
 							<>
-								<div className={modalStyles['wallet-address']}>0x6b0cec6b6a671569e717e6b7b1c77ae4fffe1293</div>
+								<div className={modalStyles['wallet-address']}>{walletAddress}</div>
 								<div style={{display: 'flex', alignItems: 'center', marginBottom: '32px'}}>
 									<a className={modalStyles['modal-link']}>View on BscScan <BiLinkExternal /></a>
 									<a className={modalStyles['modal-link']} onClick={this.handleCopy}>Copy Address {!copied ? <MdContentCopy /> : <RiCheckboxCircleLine />}</a>

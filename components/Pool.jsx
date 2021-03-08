@@ -10,6 +10,7 @@ export default class Pool extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            approving: false,
             detailsVisible: false,
             stakingModalVisible: false,
             depositAmount: false,
@@ -33,7 +34,7 @@ export default class Pool extends Component {
     }
 
     render() {
-        const { detailsVisible, stakingModalVisible } = this.state
+        const { detailsVisible, stakingModalVisible, approving } = this.state
         const { type, finished, walletConnected, approved, staked } = this.props
         return (
             <>
@@ -76,7 +77,7 @@ export default class Pool extends Component {
                                     </div>
                                 ) : (
                                     <div className={styles['button-container']}>
-                                        <button className={styles.button} style={{width: '100%'}} onClick={this.props.onModalToggle}>Approve CAKE</button>
+                                        <button className={`${styles.button} ${approving ? styles['disabled-button'] : ''}`} style={{width: '100%'}}>Approve CAKE</button>
                                     </div>
                                 )
                             ) : (
@@ -148,7 +149,8 @@ export default class Pool extends Component {
                     BackdropProps={{
                         style: {
                             backgroundColor: '#4c5711',
-                            opacity: 0.6
+                            opacity: 0.6,
+                            zIndex: 0
                         }
                     }}
                     PaperProps={{
