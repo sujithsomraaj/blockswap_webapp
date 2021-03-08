@@ -10,6 +10,8 @@ import { MdContentCopy } from 'react-icons/md'
 import MetamaskIcon from '../public/icons/Metamask'
 import WalletConnectIcon from '../public/icons/WalletConnect'
 import QuestionIcon from '../public/icons/Question'
+import Lottie from 'lottie-react'
+import Blockchain from '../public/graphics/blockchain.json'
 import styles from '../styles/pages/Pools.module.css'
 import modalStyles from '../styles/components/Navbar.module.css'
 export default class Home extends Component {
@@ -191,7 +193,8 @@ export default class Home extends Component {
 										<li>Rewards are calculated per block.</li>
 									</ul>
 								</div>
-								<img src="/images/syrup.png" width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} />
+								{/* <img src="/images/syrup.png" width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} /> */}
+								<Lottie animationData={Blockchain} width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} />
 							</div>
 							<div className='flex-centered-container' style={{marginBottom: '32px'}}>
 								<div className='flex-centered-container' style={{marginRight: '24px'}}>
