@@ -194,7 +194,7 @@ export default class Home extends Component {
 									</ul>
 								</div>
 								{/* <img src="/images/syrup.png" width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} /> */}
-								<Lottie animationData={Blockchain} width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} />
+								<Lottie animationData={Blockchain} />
 							</div>
 							<div className='flex-centered-container' style={{marginBottom: '32px'}}>
 								<div className='flex-centered-container' style={{marginRight: '24px'}}>
