@@ -8,13 +8,13 @@ import { Dialog } from '@material-ui/core'
 import { RiCloseFill } from 'react-icons/ri'
 import {STAKING_ABI,STAKING_ADDRESS,PROVIDER} from '../utils/contracts'
 import { toast } from 'react-toastify'
-import { AiFillCodeSandboxCircle } from 'react-icons/ai'
-import { BiEqualizer } from 'react-icons/bi'
+
 const ethers = require('ethers')
 export default class Pool extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            approving: false,
             detailsVisible: false,
             stakingModalVisible: false,
             depositAmount: false,
@@ -300,7 +300,8 @@ export default class Pool extends Component {
                     BackdropProps={{
                         style: {
                             backgroundColor: '#4c5711',
-                            opacity: 0.6
+                            opacity: 0.6,
+                            zIndex: 0
                         }
                     }}
                     PaperProps={{

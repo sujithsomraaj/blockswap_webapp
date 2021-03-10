@@ -11,10 +11,10 @@ import MetamaskIcon from '../public/icons/Metamask'
 import WalletConnectIcon from '../public/icons/WalletConnect'
 import TrustWalletIcon from '../public/icons/TrustWalletIcon'
 import QuestionIcon from '../public/icons/Question'
+import Lottie from 'lottie-react'
+import Blockchain from '../public/graphics/blockchain.json'
 import styles from '../styles/pages/Pools.module.css'
 import modalStyles from '../styles/components/Navbar.module.css'
-import Lottie from "lottie-react"
-import BlockAnimation from "../public/blocks.json";
 import {POOLS} from '../utils/pools'
 import { ToastContainer } from 'react-toastify'
 
@@ -120,8 +120,8 @@ export default class Home extends Component {
 										<li>Rewards are calculated per block.</li>
 									</ul>
 								</div>
-								<Lottie animationData={BlockAnimation} style={{height:'210px',width:'410px'}} />
 								{/* <img src="/images/syrup.png" width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} /> */}
+								<Lottie animationData={Blockchain} />
 							</div>
 							<div className='flex-centered-container' style={{marginBottom: '32px'}}>
 								<div className='flex-centered-container' style={{marginRight: '24px'}}>
@@ -182,7 +182,8 @@ export default class Home extends Component {
                     BackdropProps={{
                         style: {
                             backgroundColor: '#4c5711',
-                            opacity: 0.6
+                            opacity: 0.6,
+							zIndex: 0
                         }
                     }}
                     PaperProps={{
