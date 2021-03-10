@@ -5,3 +5,4 @@ const WalletConnectIcon = () => {
 }
  
 export default WalletConnectIcon;
+

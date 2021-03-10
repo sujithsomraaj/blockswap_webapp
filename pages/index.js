@@ -9,17 +9,22 @@ import { BiLinkExternal } from 'react-icons/bi'
 import { MdContentCopy } from 'react-icons/md'
 import MetamaskIcon from '../public/icons/Metamask'
 import WalletConnectIcon from '../public/icons/WalletConnect'
+import TrustWalletIcon from '../public/icons/TrustWalletIcon'
 import QuestionIcon from '../public/icons/Question'
 import styles from '../styles/pages/Pools.module.css'
 import modalStyles from '../styles/components/Navbar.module.css'
+import Lottie from "lottie-react"
+import BlockAnimation from "../public/blocks.json";
+import {POOLS} from '../utils/pools'
+import { ToastContainer } from 'react-toastify'
+
 export default class Home extends Component {
+	
 	constructor() {
 		super()
 		this.state = {
-			sidebarExpanded: true,
+			sidebarExpanded: false,
 			connectModalVisible: false,
-			walletConnected: false,
-			walletAddress: '',
 			approved: false,
 			staked: '',
 			copied: false,
@@ -30,19 +35,6 @@ export default class Home extends Component {
 	}
 
 	componentDidMount() {
-		const pools = Array.from({length: 20}, (_, i) => {
-			return {
-				key: i,
-				type: 'core',
-				finished: false
-			}
-		})
-		pools.push({
-			key: pools.length,
-			type: 'community',
-			finished: false
-		})
-		this.setState({pools})
 		if (typeof window !== undefined) {
 			if (window.innerWidth < 968) {
 				this.setState({sidebarExpanded: false})
@@ -76,83 +68,18 @@ export default class Home extends Component {
     }
 
 	handleStakingVisibility = (e) => {
-		const { tab } = this.state
-		this.setState({stakedOnly: e.target.checked}, () => {
-			if (tab === 'active') {
-				if (this.state.stakedOnly) {
-					const pools = [
-						{
-							key: 0,
-							type: 'community',
-							finished: false
-						}
-					]
-					this.setState({pools})
-				} else {
-					const pools = Array.from({length: 20}, (_, i) => {
-						return {
-							key: i,
-							type: 'core',
-							finished: false
-						}
-					})
-					pools.push({
-						key: pools.length,
-						type: 'community',
-						finished: false
-					})
-					this.setState({pools})
-				}
-			}
-		})
+		this.setState({stakedOnly: e.target.checked})
 	}
 
 	setTab = (e, tab) => {
 		e.preventDefault();
-		const { stakedOnly } = this.state
-		this.setState({tab}, () => {
-			if (this.state.tab === 'active') {
-				if (stakedOnly) {
-					const pools = [
-						{
-							key: 0,
-							type: 'community',
-							finished: false
-						}
-					]
-					this.setState({pools})
-				} else {
-					const pools = Array.from({length: 20}, (_, i) => {
-						return {
-							key: i,
-							type: 'core',
-							finished: false
-						}
-					})
-					pools.push({
-						key: pools.length,
-						type: 'community',
-						finished: false
-					})
-					this.setState({pools})
-				}
-			} else {
-				const pools = Array.from({length: 21}, (_, i) => {
-					return {
-						key: i,
-						type: 'core',
-						finished: true
-					}
-				})
-				this.setState({pools})
-			}
-		})
+		this.setState({tab})
 	}
 
 	handleCopy = (e) => {
 		e.preventDefault()
 		if (typeof window !== undefined) {
-			navigator.clipboard.writeText(this.state.walletAddress)
+			navigator.clipboard.writeText(this.props.walletAddress)
 				.then(() => {
 					this.setState({copied: true}, () => {
 						setTimeout(
@@ -166,13 +93,15 @@ export default class Home extends Component {
 	}
 	
 	render() {
-		const { sidebarExpanded, connectModalVisible, stakedOnly, tab, pools, walletConnected, walletAddress, copied, approved, staked } = this.state;
+		const { sidebarExpanded, connectModalVisible, stakedOnly, tab, pools, copied, approved, staked } = this.state;
+		const { walletAddress,walletConnected, signer } = this.props
 		return (
 			<>
 				<Head>
 					<title>Blockswap</title>
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
+				<ToastContainer />
 				<Navbar
 					onSidebarToggle={this.handleSidebarVisibility}
 					onModalToggle={this.handleModalToggle}
@@ -186,12 +115,13 @@ export default class Home extends Component {
 								<div>
 									<h1>Block Pool</h1>
 									<ul>
-										<li>Stake CAKE to earn new tokens.</li>
+										<li>Stake BLOCK to earn new tokens.</li>
 										<li>You can unstake at any time.</li>
 										<li>Rewards are calculated per block.</li>
 									</ul>
 								</div>
-								<img src="/images/syrup.png" width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} />
+								<Lottie animationData={BlockAnimation} style={{height:'210px',width:'410px'}} />
+								{/* <img src="/images/syrup.png" width="410" height="191" style={{height: 'auto', maxWidth: '100%'}} /> */}
 							</div>
 							<div className='flex-centered-container' style={{marginBottom: '32px'}}>
 								<div className='flex-centered-container' style={{marginRight: '24px'}}>
@@ -208,15 +138,31 @@ export default class Home extends Component {
 							</div>
 							<div className={styles.divider} />
 							<div className={styles.pools}>
-								{pools.map(({ key, type, finished }) => (
+								{POOLS.map(({ 
+									key, 
+									type, 
+									name,
+									finished, 
+									contractABI, 
+									contractAddress, 
+									totalSupply,
+									website,
+									icon
+								}) => (
 									<Pool
 										key={key}
 										type={type}
+										name={name}
 										finished={finished}
+										contractAddress={contractAddress}
+										contractABI={contractABI}
 										onModalToggle={this.handleModalToggle}
 										walletConnected={walletConnected}
-										approved={approved}
-										staked={staked}
+										signer = {this.props.signer}
+										totalSupply = {totalSupply}
+										website={website}
+										icon={icon}
+										walletAddress={this.props.walletAddress}
 									/>
 								))}
 							</div>
@@ -260,24 +206,28 @@ export default class Home extends Component {
                     <div className={modalStyles['modal-content']}>
 						{walletConnected ? (
 							<>
-								<div className={modalStyles['wallet-address']}>0x6b0cec6b6a671569e717e6b7b1c77ae4fffe1293</div>
+								<div className={modalStyles['wallet-address']}>{this.props.walletAddress}</div>
 								<div style={{display: 'flex', alignItems: 'center', marginBottom: '32px'}}>
-									<a className={modalStyles['modal-link']}>View on BscScan <BiLinkExternal /></a>
+									<a href={`https://www.bscscan.com/address/${this.props.walletAddress}`} target="_blank" rel="noopener noreferrer" className={modalStyles['modal-link']}>View on BscScan <BiLinkExternal /></a>
 									<a className={modalStyles['modal-link']} onClick={this.handleCopy}>Copy Address {!copied ? <MdContentCopy /> : <RiCheckboxCircleLine />}</a>
 								</div>
 								<div style={{display: 'flex', justifyContent: 'center'}}>
-									<button className={modalStyles['logout-button']}>Logout</button>
+									<button className={modalStyles['logout-button']} onClick={()=>{this.props.logout()}}>Logout</button>
 								</div>
 							</>
 						) : (
 							<>
-								<button className={modalStyles['token-button']}>
+								<button className={modalStyles['token-button']} onClick={()=>{this.props.login('metamask')}}>
 									<div>Metamask</div>
 									<MetamaskIcon />
 								</button>
-								<button className={modalStyles['token-button']}>
+								<button className={modalStyles['token-button']} onClick={()=>{this.props.login('wallet-connect')}}>
 									<div>WalletConnect</div>
 									<WalletConnectIcon />
+								</button>
+								<button className={modalStyles['token-button']} onClick={()=>{this.props.login('trust-wallet')}}>
+									<div>Trust Wallet</div>
+									<TrustWalletIcon />
 								</button>
 								<a href="#">
 									<QuestionIcon />

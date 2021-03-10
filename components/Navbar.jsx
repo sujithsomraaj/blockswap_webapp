@@ -60,7 +60,7 @@ export default class Navbar extends Component {
                     <div style={{display: 'flex'}}>
                         <button className={styles['connect-button']} onClick={this.props.onModalToggle}>
                             {walletConnected ? (
-                                walletAddress.slice(0, 3)+"..."+walletAddress.slice(-4)
+                                walletAddress.slice(0, 5)+"***"+walletAddress.slice(-4)
                             ) : "Connect"}
                         </button>
                         <div className={styles['profile-button-container']}>
