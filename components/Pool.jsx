@@ -26,7 +26,9 @@ export default class Pool extends Component {
             amount : '',
             balance : '',
             totalStaked : '',
-            rFactor : ''
+            rFactor : '',
+            unclaimed : '0.00000000',
+            stakedTokens : '0.00000000'
         }
     }
 
@@ -35,12 +37,17 @@ export default class Pool extends Component {
         this.fetchBalance()
         this.fetchStaked()
         this.fetchAPY()
+        this.fetchUnclaimed()
+        this.fetchTotalStaked()
     }
 
     componentDidUpdate = (prevProps) => {
         if(this.props.walletAddress !== prevProps.walletAddress){
             this.fetchApproval()
             this.fetchBalance()
+            this.fetchUnclaimed()
+            this.fetchStaked()
+            this.fetchTotalStaked()
         }
     }
 
@@ -74,15 +81,27 @@ export default class Pool extends Component {
     }
 
     fetchStaked = async () => {
+        const {contractAddress, walletAddress} = this.props
+        if(walletAddress && contractAddress){
+        let contract = new ethers.Contract(STAKING_ADDRESS,STAKING_ABI,PROVIDER)
+        let response = await contract.users(walletAddress, contractAddress)
+        let staked = ethers.utils.formatEther(response.currentStake)
+        this.setState({
+            stakedTokens : staked
+        })
+        }
+    }
+
+    fetchTotalStaked = async () => {
         const {contractAddress, contractABI, walletAddress} = this.props
         if(walletAddress && contractAddress){
         let contract = new ethers.Contract(contractAddress,contractABI,PROVIDER)
-        let balance = await contract.balanceOf(STAKING_ADDRESS)
-            balance = ethers.utils.formatUnits(
-                        balance,18
+        let totalStaked = await contract.balanceOf(STAKING_ADDRESS)
+            totalStaked = ethers.utils.formatUnits(
+                        totalStaked,18
                         )
         this.setState({
-            totalStaked : balance
+            totalStaked : totalStaked
         })
         }
     }
@@ -97,7 +116,24 @@ export default class Pool extends Component {
         this.setState({
             rFactor : rFactor
         })
+        }
     }
+
+    fetchUnclaimed = async () => {
+        const {contractAddress, walletAddress} = this.props
+        if(contractAddress){
+        let contract = new ethers.Contract(STAKING_ADDRESS,STAKING_ABI,PROVIDER)
+        try{
+        let unclaimed = await contract.fetchUnclaimed(walletAddress,contractAddress)
+            unclaimed = ethers.utils.formatEther(unclaimed)
+            unclaimed = parseFloat(unclaimed).toFixed(8)
+        this.setState({
+            unclaimed : unclaimed
+        })
+        } catch(e){
+            console.log(e)
+        }
+        }
     }
 
     handleDetailsToggle = () => {
@@ -140,6 +176,7 @@ export default class Pool extends Component {
                     clearInterval(intervalId)
                 }
                 } catch(e){
+                    toast(e.message)
                     console.log(e)
                 }
             },5000)
@@ -171,6 +208,7 @@ export default class Pool extends Component {
                     })
                 }
                 } catch(e){
+                    toast(e.message)
                     console.log(e)
                 }
             },5000)
@@ -180,8 +218,23 @@ export default class Pool extends Component {
         }
     }
 
+    claim = async () => {
+        let {contractAddress} = this.props
+        let contract = new ethers.Contract(
+            STAKING_ADDRESS,
+            STAKING_ABI,
+            this.props.signer
+        )
+        try{
+        let result = await contract.claim(contractAddress)
+        toast(result.hash)
+        } catch(e){
+            toast(e.message)
+        }
+    }
+
     render() {
-        const { detailsVisible, stakingModalVisible, approved, staked , finished, staking, totalStaked, rFactor } = this.state
+        const { detailsVisible, stakingModalVisible, approved, staked , finished, staking, totalStaked, rFactor, unclaimed, stakedTokens } = this.state
         const { type, walletConnected, name, website, icon } = this.props
         return (
             <>
@@ -201,13 +254,19 @@ export default class Pool extends Component {
                             </div>
                             {
                             walletConnected && (
-                                <button className={`${styles['pool-action-button']} ${styles['disabled-button']}`}>Harvest</button>
+                                <button 
+                                className={`${styles['pool-action-button']} ${parseFloat(stakedTokens) > 0 ? null : styles['disabled-button']}`}
+                                disabled={!parseFloat(stakedTokens) > 0}
+                                onClick={()=>{this.claim()}}
+                                > 
+                                Harvest 
+                                </button>
                             )
                             }
                         </div>
                         <div className="flex-spaced-container">
                             <div className={styles.earnings}>
-                                {type === 'core' ? '0.0000' : '???'}
+                                {type === 'core' ? `${unclaimed}` : '???'}
                             </div>
                             {/* {approved && (
                                 <button className={`${styles['pool-action-button']} ${styles['disabled-button']}`}>Compound</button>
@@ -245,7 +304,7 @@ export default class Pool extends Component {
                         </div>
                         <div className="flex-spaced-container" style={{fontSize: '14px'}}>
                             <div>{type === 'community' && '🥞  '}Your Stake:</div>
-                            <div className={styles['text-small']}>{type === 'core' ? '0.0000' : '??? CAKE'}</div>
+                            <div className={styles['text-small']}>{type === 'core' ? `${stakedTokens}` : '??? CAKE'}</div>
                         </div>
                     </div>
                     <div className={styles['card-footer']}>
@@ -327,14 +386,14 @@ export default class Pool extends Component {
                             <div style={{display: 'flex', minHeight: '21px', marginBottom: '8px', justifyContent: 'flex-end'}}>
                                 <div className={modalStyles.balance}>
                                     {
-                                    this.state.balance > this.state.allowance ?
+                                    parseFloat(this.state.balance) > parseFloat(this.state.allowance) ?
                                     this.state.allowance 
                                     :
-                                    this.state.allowance > this.state.balance ?
+                                    parseFloat(this.state.allowance) > parseFloat(this.state.balance) ?
                                     this.state.balance
                                     :
-                                    this.state.balance
-                                    } {name} Available
+                                    parseFloat(this.state.balance)
+                                    } {name} AVAILABLE
                                 </div>
                             </div>
                             <div style={{display: 'flex', alignItems: 'center'}}>
@@ -344,8 +403,8 @@ export default class Pool extends Component {
                                     <div>
                                         <button onClick={()=>{
                                             this.setState({
-                                                amount : this.state.balance > this.state.allowance ? this.state.allowance 
-                                                : this.state.allowance > this.state.balance ? this.state.balance : this.state.balance
+                                                amount : parseFloat(this.state.balance) > parseFloat(this.state.allowance) ? parseFloat(this.state.allowance) 
+                                                : parseFloat(this.state.allowance) > parseFloat(this.state.balance) ? parseFloat(this.state.balance) : parseFloat(this.state.balance)
                                             })
                                             }
                                         } className={modalStyles['max-button']} 
